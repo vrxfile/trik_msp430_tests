@@ -1,0 +1,1 @@
+export QWS_MOUSE_PROTO=IntelliMouse:/dev/input/mice

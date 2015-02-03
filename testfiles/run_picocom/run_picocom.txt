@@ -1,0 +1,1 @@
+picocom --echo -b 921600 /dev/ttyACM0 -r -l --send-cmd "ascii_xfr -s -v" --receive-cmd "ascii-xfr -rv" --omap crcrlf
