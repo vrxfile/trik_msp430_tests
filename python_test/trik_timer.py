@@ -3,7 +3,7 @@ __author__ = 'Rostislav Varzar'
 import trik_protocol
 
 # Timer address
-timer1 = 0x2E
+timer1 = 0x26
 
 # Timer registers
 atctl = 0x00

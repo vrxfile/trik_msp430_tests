@@ -4,7 +4,7 @@ import os
 import trik_protocol
 
 # Touch address
-touch1 = 0x2F
+touch1 = 0x27
 
 # Touch registers
 tmod = 0x00
