@@ -22,6 +22,7 @@ ival = 0x06
 idel = 0x07
 
 # ICTL bits
+i2c_disable = 0x80
 i2c_enable = 0x80
 i2c_read = 0x20
 i2c_write = 0x40
@@ -33,28 +34,39 @@ hmc5883l_x = 0x0001
 hmc5883l_y = 0x0002
 hmc5883l_z = 0x0003
 
-# Enable
-def enable_sensor(sensnum, pullup):
-    sensctl = sens_enable + sens_read
-    if pullup:
-        sensctl = sensctl + sens_pull
-    trik_protocol.write_reg(sensnum, sctl, sensctl)
+# Enable I2C
+def enable_i2c(i2cnum):
+    trik_protocol.write_reg(i2cnum, ictl, i2c_enable)
 
-# Enable sensor in async mode
-def enable_sensor_in_async(sensnum, pullup):
-    sensctl = sens_enable + sens_read + sens_async
-    if pullup:
-        sensctl = sensctl + sens_pull
-    trik_protocol.write_reg(sensnum, sctl, sensctl)
+# Disable I2C
+def disable_i2c(i2cnum):
+    trik_protocol.write_reg(i2cnum, ictl, i2c_disable)
 
-# Set sensor type
-def set_i2c_sensor_type(sensnum, senstype):
-    trik_protocol.write_reg(sensnum, sidx, senstype)
+# Read I2C device register
+def read_i2c(i2cnum, i2cdev, i2creg):
+    trik_protocol.write_reg(i2cnum, idev, i2cdev)
+    trik_protocol.write_reg(i2cnum, ireg, i2creg)
+    trik_protocol.write_reg(i2cnum, idat, 0x00)
+    trik_protocol.write_reg(i2cnum, ictl, i2c_enable + i2c_read)
+    return trik_protocol.read_reg(i2cnum, idat)
 
-# Read sensor value
-def read_sensor(sensnum):
-    return trik_protocol.read_reg(sensnum, sval)
+# Write I2C device register
+def write_i2c(i2cnum, i2cdev, i2creg, i2cdat):
+    trik_protocol.write_reg(i2cnum, idev, i2cdev)
+    trik_protocol.write_reg(i2cnum, ireg, i2creg)
+    trik_protocol.write_reg(i2cnum, idat, i2cdat)
+    trik_protocol.write_reg(i2cnum, ictl, i2c_enable + i2c_write)
 
+# Set I2C sensor type
+def set_i2c_sensor_type(i2cnum, i2csenstype):
+    trik_protocol.write_reg(i2cnum, iidx, i2csenstype)
+
+# Read I2C sensor
+def read_i2c(i2cnum):
+    trik_protocol.write_reg(i2cnum, ictl, i2c_enable + i2c_sens)
+    return trik_protocol.read_reg(i2cnum, ival)
+
+"""
 # Get SCTL register
 def get_sensor_control(sensnum):
     return trik_protocol.read_reg(sensnum, sctl)
@@ -62,3 +74,4 @@ def get_sensor_control(sensnum):
 # Get SIDX register (type of sensor)
 def get_sensor_type(sensnum):
     return trik_protocol.read_reg(sensnum, sidx)
+"""
