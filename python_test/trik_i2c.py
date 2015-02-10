@@ -2,42 +2,38 @@ __author__ = 'Rostislav Varzar'
 
 import trik_protocol
 
-# Encoder addresses
-sensor1 = 0x04
-sensor2 = 0x05
-sensor3 = 0x06
-sensor4 = 0x07
-sensor5 = 0x08
-sensor6 = 0x09
-sensor7 = 0x0A
-sensor8 = 0x0B
-sensor9 = 0x0C
-sensor10 = 0x0D
-sensor11 = 0x0E
-sensor12 = 0x0F
-sensor13 = 0x10
-sensor14 = 0x11
-sensor15 = 0x12
-sensor16 = 0x13
-sensor17 = 0x14
-sensor18 = 0x15
+# I2C addresses
+i2c1 = 0x28
+i2c2 = 0x29
+i2c3 = 0x2A
+i2c4 = 0x2B
+i2c5 = 0x2C
+i2c6 = 0x2D
+i2c7 = 0x2E
 
-# Encoder registers
-sctl = 0x00
-sidx = 0x01
-sval = 0x02
+# I2C registers
+ictl = 0x00
+idev = 0x01
+ireg = 0x02
+idat = 0x03
+ierr = 0x04
+iidx = 0x05
+ival = 0x06
+idel = 0x07
 
-# SCTL bits
-sens_enable = 0x8000
-sens_async = 0x4000
-sens_pull = 0x2000
-sens_read = 0x0001
+# ICTL bits
+i2c_enable = 0x80
+i2c_read = 0x20
+i2c_write = 0x40
+i2c_sens = 0x10
 
 # Sensor type
-sens_dig = 0x0000
-sens_ana = 0x0001
+nxttemp = 0x0000
+hmc5883l_x = 0x0001
+hmc5883l_y = 0x0002
+hmc5883l_z = 0x0003
 
-# Enable sensor
+# Enable
 def enable_sensor(sensnum, pullup):
     sensctl = sens_enable + sens_read
     if pullup:
@@ -52,7 +48,7 @@ def enable_sensor_in_async(sensnum, pullup):
     trik_protocol.write_reg(sensnum, sctl, sensctl)
 
 # Set sensor type
-def set_sensor_type(sensnum, senstype):
+def set_i2c_sensor_type(sensnum, senstype):
     trik_protocol.write_reg(sensnum, sidx, senstype)
 
 # Read sensor value
