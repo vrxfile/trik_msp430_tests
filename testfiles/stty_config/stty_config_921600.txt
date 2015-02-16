@@ -1,0 +1,1 @@
+stty 921600 -F /dev/ttyACM0 -echo -onlcr
