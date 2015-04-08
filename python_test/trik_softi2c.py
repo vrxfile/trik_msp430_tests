@@ -20,6 +20,7 @@ ierr = 0x04
 iidx = 0x05
 ival = 0x06
 idel = 0x07
+ipar = 0x09
 
 # ICTL bits
 i2c_disable = 0x80
@@ -38,6 +39,12 @@ mcp3424_ch1 = 0x0004
 mcp3424_ch2 = 0x0005
 mcp3424_ch3 = 0x0006
 mcp3424_ch4 = 0x0007
+
+# MCP3424 PGA gain
+mcp3424_gain1 = 0x0000
+mcp3424_gain2 = 0x0001
+mcp3424_gain4 = 0x0002
+mcp3424_gain8 = 0x0003
 
 # Enable I2C
 def enable_i2c(i2cnum):
@@ -65,6 +72,10 @@ def write_i2c(i2cnum, i2cdev, i2creg, i2cdat):
 # Set I2C sensor type
 def set_i2c_sensor_type(i2cnum, i2csenstype):
     trik_protocol.write_reg(i2cnum, iidx, i2csenstype)
+
+# Set I2C sensor ext. parameter
+def set_i2c_sensor_parameter(i2cnum, i2csenspar):
+    trik_protocol.write_reg(i2cnum, ipar, i2csenspar)
 
 # Read I2C sensor
 def read_i2c_sensor(i2cnum):

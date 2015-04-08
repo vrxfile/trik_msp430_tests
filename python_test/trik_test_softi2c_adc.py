@@ -30,20 +30,14 @@ trik_softi2c.enable_i2c(trik_softi2c.i2c4)
 i2cctl, daddr, rcode, ecode = trik_protocol.get_reg_value(trik_softi2c.get_i2c_control(trik_softi2c.i2c4))
 print_there(1, 1, "I2C ctl register: 0x%04X " % (i2cctl))
 
-trik_softi2c.set_i2c_sensor_type(trik_softi2c.i2c4, trik_softi2c.mcp3424_ch2)
-trik_softi2c.set_i2c_sensor_type(trik_softi2c.i2c4, trik_softi2c.mcp3424_ch2)
-ch2, daddr, rcode, ecode = trik_protocol.get_reg_value(trik_softi2c.read_i2c_sensor(trik_softi2c.i2c4))
-ch2, daddr, rcode, ecode = trik_protocol.get_reg_value(trik_softi2c.read_i2c_sensor(trik_softi2c.i2c4))
-ch2, daddr, rcode, ecode = trik_protocol.get_reg_value(trik_softi2c.read_i2c_sensor(trik_softi2c.i2c4))
-ch2, daddr, rcode, ecode = trik_protocol.get_reg_value(trik_softi2c.read_i2c_sensor(trik_softi2c.i2c4))
-ch2, daddr, rcode, ecode = trik_protocol.get_reg_value(trik_softi2c.read_i2c_sensor(trik_softi2c.i2c4))
-time.sleep(1)
-
 i = 0
+trik_softi2c.set_i2c_sensor_parameter(trik_softi2c.i2c4, trik_softi2c.mcp3424_gain8)
+trik_softi2c.set_i2c_sensor_parameter(trik_softi2c.i2c4, trik_softi2c.mcp3424_gain8)
+trik_softi2c.set_i2c_sensor_parameter(trik_softi2c.i2c4, trik_softi2c.mcp3424_gain8)
 while i < 1000:
     trik_softi2c.set_i2c_sensor_type(trik_softi2c.i2c4, trik_softi2c.mcp3424_ch1)
     ch1, daddr, rcode, ecode = trik_protocol.get_reg_value(trik_softi2c.read_i2c_sensor(trik_softi2c.i2c4))
-    print_there(1, 2, "CH1=%010u, CH2=%010u, i=%010u " % (ch1, ch2, i))
+    print_there(1, 2, "CH1=%010u, CH2=%010u, i=%010u " % (ch1, 0, i))
     i = i + 1
 
 trik_protocol.fflg = 0x00
